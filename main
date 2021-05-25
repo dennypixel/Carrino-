@@ -1,0 +1,76 @@
+//Incluindo biblioteca Ultrasonic.h
+#include "Ultrasonic.h"
+
+//Criando objeto ultrasonic e definindo as portas digitais
+//do Trigger - 9 - e Echo - 10
+Ultrasonic SensorUltrassonico1(9, 10);
+
+
+long Microsegundos = 0;// Variável para armazenar o valor do tempo da reflexão do som refletido pelo objeto fornecido pela biblioteca do sensor
+float DistanciaemCM = 0;// Variável para armazenar o valor da distância a ser convertido por uma função da própria bilbioteca do sensor
+
+
+#define MotorSent1 7
+#define MotorSent2 8
+
+#define VelocidadeMotorSent 6
+
+
+
+
+//============================================================ Escolhe a velocidade dos motores ==================================================================//
+int ValorVelocidadeMotorSent = 120;
+
+
+void setup() {
+
+  //============================================================== Definições de entrada e saída ===================================================================//
+
+  pinMode(MotorSent1, OUTPUT);
+  pinMode(MotorSent2, OUTPUT);
+
+  Serial.begin(115200);// Inicia a comunicação seria com velocidade de 115200 bits por segundo
+
+  delay(3000);// Tempo de espera para inicialização (para dar tempo de por o robô no chão)
+}
+
+void loop() {
+
+
+
+  //Convertendo a distância em CM e lendo o sensor
+  DistanciaemCM = SensorUltrassonico1.convert(SensorUltrassonico1.timing(), Ultrasonic::CM);
+
+  Serial.print(DistanciaemCM);
+  Serial.println(" cm");
+
+
+  if (DistanciaemCM <= 20) {// Se a distância lida pelo sensor for menor ou igual que 20 centimetros
+    //Velocidade motor
+    analogWrite( VelocidadeMotorSent, ValorVelocidadeMotorSent);
+
+
+    // Motor para trás
+    digitalWrite(MotorSent1, HIGH);
+    digitalWrite(MotorSent2, LOW);
+
+    delay(700);// Tempo que ficará indo para trás
+
+
+  }
+
+
+  else {// Se não, ou seja, se a distância for maior que 40 centimetros
+
+    //Velocidade motor 
+   analogWrite( VelocidadeMotorSent, ValorVelocidadeMotorSent);
+
+
+    // Motor lado esquerdo para frente
+    digitalWrite(MotorSent1, LOW);
+    digitalWrite(MotorSent2, HIGH);
+
+
+  }
+
+}
