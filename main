@@ -16,8 +16,6 @@ float DistanciaemCM = 0;// Variável para armazenar o valor da distância a ser 
 #define VelocidadeMotorSent 6
 
 
-
-
 //============================================================ Escolhe a velocidade dos motores ==================================================================//
 int ValorVelocidadeMotorSent = 120;
 
@@ -50,17 +48,17 @@ void loop() {
     analogWrite( VelocidadeMotorSent, ValorVelocidadeMotorSent);
 
 
-    // Motor para trás
-    digitalWrite(MotorSent1, HIGH);
+    // Motor para
+    digitalWrite(MotorSent1, LOW);
     digitalWrite(MotorSent2, LOW);
 
-    delay(700);// Tempo que ficará indo para trás
+    delay(700);// Tempo que ficará parado
 
 
   }
 
 
-  else {// Se não, ou seja, se a distância for maior que 40 centimetros
+  else {// Se não, ou seja, se a distância for maior que 20 centimetros
 
     //Velocidade motor 
    analogWrite( VelocidadeMotorSent, ValorVelocidadeMotorSent);
